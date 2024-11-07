@@ -1,12 +1,12 @@
 import { CartProvider } from "@/components/CartContext";
 import "../app/globals.css";
 
-function MyApp({ Components, pageProps }) {
+function MyApp({ Component, pageProps }) {
   return (
     <CartProvider>
-      <Components {...pageProps}/>
+      <Component {...pageProps} />
     </CartProvider>
   );
-}
+};
 
 export default MyApp;
