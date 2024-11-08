@@ -4,11 +4,27 @@ import Image from "next/image";
 import { useCart } from "./CartContext";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import PayPalButton from "./PayPalButton";
 
 const Cart = () => {
   const { cartItems, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = useCart();
 
   const totalCart = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+  const conversionRate = 0.00011; 
+  const amountInUSD = (totalCart * conversionRate).toFixed(2);
+
+  const handlePaymentSuccess = (details: any) => {
+    console.log("Payment successful:", details);
+
+    clearCart();
+    alert("Payment successful! Thank you for your purchase.");
+  };
+
+  const handlePaymentError = (error: any) => {
+    console.error("Payment error:", error);
+    alert("Payment failed. Please try again.");
+  };
 
   return (
     <>
@@ -66,6 +82,15 @@ const Cart = () => {
                 <div className="w-full mt-4">
                   <h1 className="font-bold text-2xl">Total: GNF{totalCart}</h1>
                 </div>
+              </div>
+
+              <div className="my-4">
+                <PayPalButton 
+                  amount={parseFloat(amountInUSD)}
+                  currency="USD"
+                  onSuccess={handlePaymentSuccess}
+                  onError={handlePaymentError}
+                />
               </div>
 
               <button

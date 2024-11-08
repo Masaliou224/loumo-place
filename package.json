@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@paypal/react-paypal-js": "^8.7.0",
     "@prisma/client": "^5.22.0",
     "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
@@ -16,6 +17,7 @@
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.17",
     "react": "^18",
+    "react-bootstrap": "^2.10.5",
     "react-dom": "^18"
   },
   "devDependencies": {
