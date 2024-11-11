@@ -3,9 +3,13 @@
 import Link from "next/link"
 import { useCart } from "./CartContext";
 
-const Navbar = () => {
+const Navbar = ({ searchQuery, setSearchQuery }) => {
 
   const { cartQuantity } = useCart();
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   return (
     <nav className="bg-white shadow-lg sticky top-0 z-50">
@@ -26,22 +30,27 @@ const Navbar = () => {
             </svg>
           </button>
 
-    
-
-          <div className="hidden lg:flex lg:items-center lg:space-x-6">
-            <Link href="/productCard" passHref>
-              <p className="text-gray-700 hover:text-blue-400">Home</p>
-            </Link>
-            <Link href="/login">
-              <p className="text-gray-700 hover:text-blue-400">Login</p>
-            </Link>
-            <Link href="/cart" passHref>
-              <p className="text-gray-700 hover:text-blue-400">🛒 Cart: {cartQuantity > 0 && `(${cartQuantity})`}</p>
-            </Link>
-            <Link href="/register" passHref>
-              <p className="text-gray-700 hover:text-blue-400">Become a seller</p>
-            </Link>
-          </div>
+            <input 
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="w-80 h-8 p-2 border border-gray-300 rounded-md"
+            />
+            <div className="hidden lg:flex lg:items-center lg:space-x-6">
+              <Link href="/productCard" passHref>
+                <p className="text-gray-700 hover:text-blue-400">Home</p>
+              </Link>
+              <Link href="/login">
+                <p className="text-gray-700 hover:text-blue-400">Login</p>
+              </Link>
+              <Link href="/cart" passHref>
+                <p className="text-gray-700 hover:text-blue-400">🛒 Cart: {cartQuantity > 0 && `(${cartQuantity})`}</p>
+              </Link>
+              <Link href="/register" passHref>
+                <p className="text-gray-700 hover:text-blue-400">Become a seller</p>
+              </Link>
+            </div>
         </div>
       </div>
     </nav>

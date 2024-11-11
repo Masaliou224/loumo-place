@@ -44,66 +44,66 @@ const FilterSection: React.FC<FilterSectionProps> = ({ setFilters }) => {
           onChange={(e) => { setGenre(e.target.value); handleFilterChange(); }}
           className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
         >
-          <option value="">Sélectionnez un genre</option>
-          <option value="male">Home</option>
-          <option value="female">Femme</option>
-          <option value="children">Enfant</option>
+          <option value="">Select a genre</option>
+          <option value="male">Man</option>
+          <option value="female">woman</option>
+          <option value="children">Kid</option>
         </select>
       </div>
 
       <div className="mb-4">
-        <label className="block mb-1 font-medium">Taille</label>
+        <label className="block mb-1 font-medium">Size</label>
         <select 
           value={size}
           onChange={(e) => { setSize(e.target.value); handleFilterChange(); }}
           className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
         >
-          <option value="">Sélectionnez une taille</option>
-          <option value="S">Petit</option>
-          <option value="M">Moyen</option>
-          <option value="L">Grand</option>
+          <option value="">Select a size</option>
+          <option value="S">small</option>
+          <option value="M">Average</option>
+          <option value="L">Large</option>
         </select>
       </div>
 
       <div className="mb-4">
-        <label className="block mb-1 font-medium">Type de longueur</label>
+        <label className="block mb-1 font-medium">Length type</label>
         <select 
           value={lengthType}
           onChange={(e) => { setLengthType(e.target.value); handleFilterChange(); }}
           className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
         >
-          <option value="">Sélectionnez un type de longueur</option>
-          <option value="short">Court</option>
+          <option value="">Select a length type</option>
+          <option value="short">Short</option>
           <option value="long">Long</option>
         </select>
       </div>
 
       <div className="mb-4">
-        <label className="block mb-1 font-medium">Tissu</label>
+        <label className="block mb-1 font-medium">Fabric</label>
         <select 
           value={fabric}
           onChange={(e) => { setFabric(e.target.value); handleFilterChange(); }}
           className="w-full p-2 border border-blue-300 rounded-lg focus:outline-none focus:border-blue-500"
         >
-          <option value="">Sélectionnez un tissu</option>
-          <option value="cotton">Coton</option>
-          <option value="wool">Laine</option>
+          <option value="">Select a fabric</option>
+          <option value="cotton">Cotton</option>
+          <option value="wool">Wool</option>
         </select>
       </div>
 
       <div>
-        <label className="block mb-1 font-medium">Couleur</label>
+        <label className="block mb-1 font-medium">Color</label>
         <select 
           value={color}
           onChange={(e) => { setColor(e.target.value); handleFilterChange(); }}
           className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
         >
-          <option value="">Sélectionnez une couleur</option>
-          <option value="red">Rouge</option>
-          <option value="blue">Bleu</option>
-          <option value="white">Blanc</option>
-          <option value="gray">Gris</option>
-          <option value="black">Noir</option>
+          <option value="">Select a color</option>
+          <option value="red">Red</option>
+          <option value="blue">Blue</option>
+          <option value="white">White</option>
+          <option value="gray">Grey</option>
+          <option value="black">Black</option>
         </select>
       </div>
     </div>

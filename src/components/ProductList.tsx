@@ -57,9 +57,7 @@ const ProductList = () => {
     return matchesSearchQuery && matchesCategory && matchesFilters;
   });
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSearchQuery(e.target.value);
-  };
+
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
@@ -71,20 +69,8 @@ const ProductList = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl font-bold my-4">Product Listing</h2>
-
-        <div className="mb-4">
-          <input 
-            type="text" 
-            className="w-full p-2 border border-gray-300 rounded-md"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
-        </div>
-
         <div className="flex justify-between border-b mb-4">
           <button
             onClick={() => handleCategoryClick("All")}
@@ -102,6 +88,7 @@ const ProductList = () => {
             </button>
           ))}
         </div>
+        <h2 className="text-2xl font-bold my-4">Product Listing</h2>
 
         <div className="flex gap-4">
           <div className="flex-none w-1/4 relative">
@@ -144,7 +131,7 @@ const ProductList = () => {
                     </p>
                   </div>
                   </Link>
-                  <div className="flex space-x-4 mb-2 text-sm font-medium mx-auto">
+                  <div className="flex space-x-4 mb-2 text-sm font-medium mx-5">
                     <button 
                       onClick={() => handleAddToCart(product)}
                       className="bg-blue-500 text-white h-10 px-6 rounded hover:bg-blue-600"

@@ -5,11 +5,13 @@ import { useCart } from "./CartContext";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import PayPalButton from "./PayPalButton";
+import { useState } from "react";
 
 const Cart = () => {
-  const { cartItems, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = useCart();
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const { cartItems, removeFromCart, clearCart, increaseQuantity, decreaseQuantity, totalAmount } = useCart();
 
-  const totalCart = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const totalCart = totalAmount;
 
   const conversionRate = 0.00011; 
   const amountInUSD = (totalCart * conversionRate).toFixed(2);
@@ -28,7 +30,7 @@ const Cart = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         <div className="w-full max-w-4xl m-auto">
 
           {cartItems.length === 0 ? (

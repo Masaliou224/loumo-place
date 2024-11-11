@@ -5,6 +5,7 @@ import { Product } from "./ProductList";
 
 interface CartItem extends Product {
   quantity: number;
+  priceWithCommission: number;
 }
 
 interface CartContextProps {
@@ -15,6 +16,7 @@ interface CartContextProps {
   cartQuantity: number;
   increaseQuantity: (id: number) => void;
   decreaseQuantity: (id: number) => void;
+  totalAmount: number;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -31,6 +33,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const addToCart = (product: Product) => {
+    const commissionRate = 0.05;
+    const priceWithCommission = product.price * (1 + commissionRate);
+
+
     setCartItems((prevItems) => {
       const item = prevItems.find((item) => item.id === product.id);
       if (item) {
@@ -38,7 +44,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item 
         );
       }
-      return [...prevItems, { ...product, quantity: 1 }];
+      return [...prevItems, { ...product, quantity: 1, priceWithCommission  }];
     });
   };
 
@@ -68,8 +74,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const cartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 
+  const totalAmount = cartItems.reduce(
+    (total, item) => total + item.priceWithCommission * item.quantity,
+    0
+  );
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, cartQuantity, increaseQuantity, decreaseQuantity }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, cartQuantity, increaseQuantity, decreaseQuantity, totalAmount }}>
       {children}
     </CartContext.Provider>
   );

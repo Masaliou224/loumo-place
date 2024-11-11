@@ -1,12 +1,42 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Image from "next/image";
 import ImageCarousel from "./ImageCarousel";
 
+export interface Product {
+  id: number;
+  productName: string;
+  description: string;
+  price: number;
+  category: string;
+  image: string;
+  sellerName: string;
+  contactDetails: string;
+  genre: string;
+  size: string;
+  lengthType: string;
+  fabric: string;
+  color: string;
+}
+
 const HomePage = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+
+  const filteredProducts = products.filter((product) => {
+    const matchesSearchQuery = 
+      product.productName.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      product.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = 
+      selectedCategory === "All" || product.category === selectedCategory;
+
+      return matchesSearchQuery && matchesCategory
+    })
+
   const householdAppliances = [
     { title: "The air conditioner", price: "Price(FG)", src: "/images/Air conditionner.jpeg" },
     { title: "Oven", price: "Price(FG)", src: "/images/OvenJPG.jpg" },
@@ -37,24 +67,43 @@ const HomePage = () => {
     { title: "Toy", price: "Price(FG)", src: "/images/Toy.png" },
   ];
 
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+  };
+
   return (
     <>
-      <Navbar />
+      <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
       <div className="container mx-auto px-4 my-8">
+      <div className="flex justify-between border-b mb-4">
+          <button
+            onClick={() => handleCategoryClick("All")}
+            className={`p-2 hover:text-blue-500 ${selectedCategory === "All" ? "text-blue-500 font-bold" : ""}`}
+          >
+            All
+          </button>
+          {["Clothes", "Shoes", "Electronique", "Home", "Beauty, Toys and More", "Others"].map((category) => (
+            <button
+              key={category}
+              onClick={() => handleCategoryClick(category.toLowerCase())}
+              className={`p-2 hover:text-blue-500 ${selectedCategory === category.toLowerCase() ? "text-blue-500 font-bold" : ""}`}
+            >
+              {category} <span className="ml-1">▼</span>
+            </button>
+          ))}
+        </div>
         <ImageCarousel />
 
         {/* Section Template */}
         {[
           { title: "Household Appliance", items: householdAppliances },
           { title: "Kitchen & Dining", items: kitchenAndDiningItems },
-          { title: "Clothes All", items: clothesItems },
-          { title: "Beauty, Toys and More", items: beautyToysAndMoreItems },
         ].map((section, idx) => (
           <section key={idx} className="mb-12">
             <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
               {section.items.map((item, index) => (
-                <div key={index} className="bg-white rounded-lg shadow p-4 text-center">
+                <div key={index} className="bg-white rounded-lg shadow p-4 text-center cursor-pointer">
                   <Image 
                     src={item.src}
                     alt={item.title}
@@ -71,6 +120,71 @@ const HomePage = () => {
             </div>
           </section>
         ))}
+        
+
+        <div className="flex items-baseline flex-col md:flex-row gap-8">
+          <div className="flex-1 p-6 shadow">
+            {[
+              { title: "Clothes All", items: clothesItems },
+            ].map((section, idx) => (
+              <section key={idx} className="mb-12">
+                <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
+                <div className={
+                  "ClothesAll"
+                  ? "grid grid-cols-1 sm:grid-cols-2 gap-6"
+                  : "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6"
+                }>
+                  {section.items.map((item, index) => (
+                    <div key={index} className="bg-white rounded-lg p-4 text-center h-72 cursor-pointer">
+                      <Image 
+                        src={item.src}
+                        alt={item.title}
+                        width={150}
+                        height={150}
+                        className="mx-auto mb-2"
+                      />
+                      <div className="">
+                        <p className="font-medium">{item.title}</p>
+                        <p className="text-gray-600">{item.price}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+
+          <div className="flex-1 p-6 shadow">
+            {[
+              { title: "Beauty, Toys and More", items: beautyToysAndMoreItems },
+            ].map((section, idx) => (
+              <section key={idx} className="mb-12">
+                <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
+                <div className={
+                  "Beauty, Toys and More"
+                  ? "grid grid-cols-1 sm:grid-cols-2 gap-6"
+                  : "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6"
+                }>
+                  {section.items.map((item, index) => (
+                    <div key={index} className="bg-white rounded-lg p-4 text-center h-72 cursor-pointer">
+                      <Image 
+                        src={item.src}
+                        alt={item.title}
+                        width={150}
+                        height={150}
+                        className="mx-auto mb-2"
+                      />
+                      <div className="">
+                        <p className="font-medium">{item.title}</p>
+                        <p className="text-gray-600">{item.price}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        </div>
 
       </div>
 

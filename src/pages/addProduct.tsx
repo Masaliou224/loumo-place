@@ -134,8 +134,10 @@ const ProductForm = () => {
       setPaymentOptions("");
     };
 
+    
     reader.readAsDataURL(image);
   };
+  console.log(productName);
 
   return (
     <>

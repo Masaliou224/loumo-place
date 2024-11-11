@@ -5,8 +5,8 @@ import Image from "next/image";
 
 const images = [
   { src: "/images/Storefront.jpeg", alt: "First slide", title: "Samsung S23", price: "Price: FG" },
-  { src: "/images/SecondImage.jpeg", alt: "Second slide", title: "Second slide", price: "Price: FG" },
-  { src: "/images/ThirdImage.jpeg", alt: "Third slide", title: "Third slide", price: "Price: FG" },
+  { src: "/images/image2.jpg", alt: "Second slide", title: "Second slide", price: "Price: FG" },
+  { src: "/images/image3.jpg", alt: "Third slide", title: "Third slide", price: "Price: FG" },
 ];
 
 const ImageCarousel = () => {
@@ -23,7 +23,7 @@ const ImageCarousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full overflow-hidden h-[200px]">
+    <div className="relative w-full overflow-hidden h-[200px] pb-8">
       <div
         className="flex transition-transform duration-500"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
