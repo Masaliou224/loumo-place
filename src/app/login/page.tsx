@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const router = useRouter();
@@ -12,7 +14,8 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
+    setError("");
     try {
       const res = await fetch('/api/auth/login', {
         method: "POST",
@@ -21,10 +24,10 @@ const Login = () => {
       })
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.error)
+      if (!res.ok) throw new Error(data.error || "Login failed");
 
-      // Store token in localStorage
-      localStorage.setItem('token', data.token)
+      // Store token in a cookie
+      Cookies.set("authToken", data.token, { expires: 1 });
       router.push('/personalSpace');
     } catch (error: any) {
       setError(error.message)
@@ -55,6 +58,9 @@ const Login = () => {
           >
             Login
           </button>
+          <Link
+            href="/register"
+          >Create account</Link>
         </div>
       </form>
     </div>

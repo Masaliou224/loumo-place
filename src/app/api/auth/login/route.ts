@@ -14,13 +14,13 @@ export async function POST(req: Request) {
       )
     }
 
-    console.log("Request received:", { email, password });
+
 
     // Find user
     const user = await prisma.user.findUnique({
       where: { email }
     });
-    console.log("User found:", user);
+
 
     if (!user) {
       return NextResponse.json(
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
 
     // Verify password
     const isValid = await verifyPassword(password, user.password);
-    console.log("Password validation result:", isValid);
+
 
     if (!isValid) {
       return NextResponse.json(
@@ -42,12 +42,20 @@ export async function POST(req: Request) {
 
     // Generate token
     const token = generateToken(user.id);
-    console.log("Generated token:", token);
+    
 
-    return NextResponse.json({
-      token,
+    const response = NextResponse.json({
       user: { id: user.id, email: user.email, name: user.name }
-    })
+    });
+
+    response.cookies.set("authToken", token, {
+      httpOnly: true, // Prevents JavaScript access to the cookie
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 24 * 60 * 60,
+      path: "/",
+    });
+
+    return response;
   } catch (error) {
     console.error(error);
     return NextResponse.json(

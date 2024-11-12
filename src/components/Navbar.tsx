@@ -2,10 +2,20 @@
 
 import Link from "next/link"
 import { useCart } from "./CartContext";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const Navbar = ({ searchQuery, setSearchQuery }) => {
 
+  // const router = useRouter();
+
   const { cartQuantity } = useCart();
+
+  // const handleLogout = () => {
+  //   Cookies.remove("authToken");
+
+  //   router.push("/login");
+  // };
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -47,9 +57,20 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
               <Link href="/cart" passHref>
                 <p className="text-gray-700 hover:text-blue-400">🛒 Cart: {cartQuantity > 0 && `(${cartQuantity})`}</p>
               </Link>
-              <Link href="/register" passHref>
-                <p className="text-gray-700 hover:text-blue-400">Become a seller</p>
-              </Link>
+              <ul>
+                <li>
+                  <Link href="/personalSpace" passHref>
+                    <p className="text-gray-700 hover:text-blue-400">Become a seller</p>
+                  </Link>
+                </li>
+                <li>
+                  {/* <Link href="/" onClick={handleLogout}>
+                    <button onClick={handleLogout} className="text-gray-700 hover:text-blue-400">
+                      Logout
+                    </button> */}
+                  {/* </Link> */}
+                </li>
+              </ul>
             </div>
         </div>
       </div>

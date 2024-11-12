@@ -14,7 +14,7 @@ const Register = () => {
   const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const res = await fetch('/api/auth/register', {
         method: "POST",
@@ -23,9 +23,11 @@ const Register = () => {
       })
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.error)
+      if (!res.ok) throw new Error(data.error);
 
-      router.push('/login')
+      router.push("/personalSpace");
+
+      // router.push('/login')
     } catch (error: any) {
       setError(error.message)
     }

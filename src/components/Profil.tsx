@@ -3,15 +3,52 @@
 import Link from "next/link";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 const PersonalSpace = () => {
+  const [user, setUser] = useState<string | JwtPayload | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Get token from cookies
+    const token = Cookies.get("authToken")
+
+    if (!token) {
+      router.push("/personalSpace");
+      return;
+    }
+
+    try {
+      const decoded = jwt.decode(token);
+      if (decoded) {
+        setUser(decoded);
+      } else {
+        throw new Error("Invalid token");
+      }
+    } catch (error) {
+      console.error("Erreur lors du décodage du token:", error);
+      router.push("/login");
+    }
+  }, [router]);
+
+  const handleLogout = () => {
+    Cookies.remove("authToken");
+    router.push("login");
+  }
+
+  // if (!user) return null;
+
   return (
     <>
       <Navbar />
       <div className="bg-white shadow-lg rounded-lg p-6 mt-6">
-        <h2 className="text-xl font-bold mb-8">Mon espace personnel</h2>
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
-          <Link href="/addItems">
+        <h2 className="text-xl font-bold mb-8">My personal space</h2>
+        
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-4 mt-10">
+          <Link href="/addProduct">
             <div className="flex flex-col items-center">
               <div className="bg-blue-500 text-white p-3 rounded-full">
                 <svg
@@ -29,7 +66,7 @@ const PersonalSpace = () => {
                   />
                 </svg>
               </div>
-              <p className="text-gray-700 mt-2">Mes annonces</p>
+              <p className="text-gray-700 mt-2">My ads</p>
             </div>
           </Link>
 
@@ -51,10 +88,16 @@ const PersonalSpace = () => {
                   />
                 </svg>
               </div>
-              <p className="text-gray-700 mt-2">Mes favoris</p>
+              <p className="text-gray-700 mt-2">My favorites</p>
             </div>
           </Link>
         </div>
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 text-white p-2 rounded hover:bg-red-600 mt-10"
+        >
+          Logout
+        </button>
       </div>
       <Footer />
     </>

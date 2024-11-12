@@ -74,7 +74,7 @@ const Cart = () => {
                           <span className="text-xl px-2 py-1 text-black cursor-pointer" onClick={() => increaseQuantity(item.id)}>+</span>
                         </div>
                       </td>
-                      <td className="border border-slate-300 p-2">GNF {(item.quantity * item.price)}</td>
+                      <td className="border border-slate-300 p-2">GNF {(item.quantity * item.price).toLocaleString('fr-FR')}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -82,7 +82,7 @@ const Cart = () => {
               
               <div className="w-full">
                 <div className="w-full mt-4">
-                  <h1 className="font-bold text-2xl">Total: GNF{totalCart}</h1>
+                  <h1 className="font-bold text-2xl">Total: GNF {totalCart.toLocaleString('fr-FR')}</h1>
                 </div>
               </div>
 

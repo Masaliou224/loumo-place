@@ -45,7 +45,14 @@ const Footer = () => {
 
           {/* Consumer Policy Section */}
           <div>
-            <h3 className="text-lg font-bold text-gray-700 mb-4">Consumer Policy</h3>
+            <Link 
+              href="/policy"
+            >
+            <p className="text-gray-700 hover:text-blue-400 mb-4">Consumer Policy</p>
+            </Link>
+            <Link href="/contact" className="pt-32">
+              <button className="bg-blue-500 text-white h-10 px-6 rounded hover:bg-blue-600">Contact Us</button>
+            </Link>
           </div>
         </div>
 
