@@ -1,11 +1,15 @@
 "use client";
 
-import Link from "next/link"
+import Link from "next/link";
 import { useCart } from "./CartContext";
-import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
+import React from "react";
 
-const Navbar = ({ searchQuery, setSearchQuery }) => {
+interface NavbarProps {
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ searchQuery, setSearchQuery }) => {
 
   // const router = useRouter();
 
@@ -17,7 +21,7 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
   //   router.push("/login");
   // };
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 

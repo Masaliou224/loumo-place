@@ -1,6 +1,8 @@
+import { PaymentDetails } from "./payement";
+
 export interface PayPalButtonProps {
   amount: number;
   currency: string;
-  onSuccess: (details: any) => void;
-  onError: (error: any) => void;
+  onSuccess: (details: PaymentDetails) => void;
+  onError: (error: unknown) => void;
 }

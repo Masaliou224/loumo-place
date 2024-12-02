@@ -23,19 +23,19 @@ export interface Product {
 }
 
 const HomePage = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  // const [products, setProducts] = useState<Product[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
-  const filteredProducts = products.filter((product) => {
-    const matchesSearchQuery = 
-      product.productName.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      product.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = 
-      selectedCategory === "All" || product.category === selectedCategory;
+  // const filteredProducts = products.filter((product) => {
+  //   const matchesSearchQuery = 
+  //     product.productName.toLowerCase().includes(searchQuery.toLowerCase()) || 
+  //     product.description.toLowerCase().includes(searchQuery.toLowerCase());
+  //   const matchesCategory = 
+  //     selectedCategory === "All" || product.category === selectedCategory;
 
-      return matchesSearchQuery && matchesCategory
-    })
+  //     return matchesSearchQuery && matchesCategory
+  //   })
 
   const householdAppliances = [
     { title: "The air conditioner", price: "Price(FG)", src: "/images/Air conditionner.jpeg" },
@@ -130,7 +130,7 @@ const HomePage = () => {
               <section key={idx} className="mb-12">
                 <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
                 <div className={
-                  "ClothesAll"
+                  selectedCategory === "Clothes All"
                   ? "grid grid-cols-1 sm:grid-cols-2 gap-6"
                   : "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6"
                 }>
@@ -161,7 +161,7 @@ const HomePage = () => {
               <section key={idx} className="mb-12">
                 <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
                 <div className={
-                  "Beauty, Toys and More"
+                  selectedCategory === "Beauty, Toys and More"
                   ? "grid grid-cols-1 sm:grid-cols-2 gap-6"
                   : "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6"
                 }>

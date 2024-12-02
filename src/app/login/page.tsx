@@ -29,10 +29,14 @@ const Login = () => {
       // Store token in a cookie
       Cookies.set("authToken", data.token, { expires: 1 });
       router.push('/personalSpace');
-    } catch (error: any) {
-      setError(error.message)
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message)
+      } else {
+        setError("An unexpected error occurred");
+      }
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center">

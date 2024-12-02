@@ -1,6 +1,7 @@
 "use client";
 
 import PayPalButton from "@/components/PayPalButton";
+import { PaymentDetails } from "@/types/payement";
 import { useState } from "react";
 
 export default function CheckoutPage() {
@@ -8,7 +9,7 @@ export default function CheckoutPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const handlePaymentSuccess = async (details: any) => {
+  const handlePaymentSuccess = async (details: PaymentDetails) => {
     setLoading(true);
     try {
       const response = await fetch("/api/orders/create", {
@@ -27,14 +28,14 @@ export default function CheckoutPage() {
       if (!response.ok) throw new Error("Failed to create order");
 
       setSuccess(true);
-    } catch (err) {
+    } catch {
       setError("Failed to process payment. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handlePaymentError = (error: any) => {
+  const handlePaymentError = (error: unknown) => {
     setError("Payment failed. Please try again.");
     console.error("PayPal Error:", error);
   };

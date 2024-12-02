@@ -1,5 +1,6 @@
 "use client";
 
+import { PaymentDetails } from "@/types/payement";
 import { PayPalButtonProps } from "@/types/paypal";
 import { FUNDING, PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 
@@ -28,7 +29,28 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
         onApprove={async (data, actions) => {
           if (actions.order) {
             const details = await actions.order.capture();
-            onSuccess(details);
+
+            const purchaseUnit = details.purchase_units?.[0];
+            const customer = details.payer;
+
+            const PaymentDetails: PaymentDetails = {
+              id: details.id!,
+              orderId: data.orderID || "",
+              paymentId: details.id || "",
+              status: details.status || "",
+              amount: purchaseUnit?.amount?.value || "0",
+              currency: purchaseUnit?.amount?.currency_code || "USD",
+              payerEmail: customer?.email_address || "",
+              purchase_units: details.purchase_units?.map((unit) => ({
+                payments: unit.payments || { captures:  [{ id: "" }] },
+                amount: unit.amount || { value: "0", currency_code: "USD" },
+              })) || [],
+              payer: customer || { email_address: "" },
+              create_time: details.create_time || "",
+              update_time: details.update_time || "",
+            };
+
+            onSuccess(PaymentDetails);
           }
         }}
         onError={(err) => {

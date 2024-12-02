@@ -6,11 +6,12 @@ import Footer from "./Footer";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 const PersonalSpace = () => {
-  const [user, setUser] = useState<string | JwtPayload | null>(null);
+  // const [user, setUser] = useState<string | JwtPayload | null>(null);
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
     // Get token from cookies
@@ -23,13 +24,10 @@ const PersonalSpace = () => {
 
     try {
       const decoded = jwt.decode(token);
-      if (decoded) {
-        setUser(decoded);
-      } else {
+      if (!decoded) {
         throw new Error("Invalid token");
       }
-    } catch (error) {
-      console.error("Erreur lors du décodage du token:", error);
+    } catch {
       router.push("/login");
     }
   }, [router]);
@@ -43,7 +41,7 @@ const PersonalSpace = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} /> 
       <div className="bg-white shadow-lg rounded-lg p-6 mt-6">
         <h2 className="text-xl font-bold mb-8">My personal space</h2>
         

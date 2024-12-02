@@ -3,18 +3,8 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useCart } from "./CartContext";
-
-type Product = {
-  id: number;
-  productName: string;
-  description: string;
-  price: number;
-  sellerName: string;
-  contactDetails: string;
-  image: string;
-  category: string;
-  tags: string[];
-}
+import Image from "next/image";
+import { Product } from "@/types/product";
 
 function getProductById(id: string) {
   const products = JSON.parse(localStorage.getItem('products') || '[]');
@@ -53,6 +43,7 @@ const ProductDetails = () => {
     message: ''
   });
   const { addToCart } = useCart();
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   // Fetch product by ID when the component mounts
   useEffect(() => {
@@ -83,13 +74,13 @@ const ProductDetails = () => {
 
   return(
     <>
-      <Navbar />
+      <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <div className="mx-auto mt-6 p-4 border rounded-lg bg-white">
         {product ? (
           <div>
             <div className="flex flex-col md:flex-row items-start">
               <div className="w-full md:w-1/3 p-8 rounded-lg shadow">
-                <img 
+                <Image 
                   src={product.image} 
                   alt={product.productName} 
                   className="w-full h-auto object-cover rounded-md" 
@@ -164,7 +155,7 @@ const ProductDetails = () => {
                 {similarProducts.map((product) => (
                   <div key={product.id} className="border p-6 rounded-lg flex items-start">
                     <div>
-                      <img 
+                      <Image 
                         src={product.image} 
                         alt={product.productName}
                         className="h-32 w-full object-cover mb-2"
@@ -185,7 +176,7 @@ const ProductDetails = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {recommendedProducts.map((product) => (
                   <div key={product.id} className="border p-2 rounded-lg text-center">
-                    <img 
+                    <Image 
                       src={product.image}
                       alt={product.productName}
                       className="h-32 w-full object-cover mb-2"

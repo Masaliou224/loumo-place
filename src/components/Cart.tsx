@@ -6,6 +6,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import PayPalButton from "./PayPalButton";
 import { useState } from "react";
+import { PaymentDetails } from "@/types/payement";
 
 const Cart = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -16,14 +17,14 @@ const Cart = () => {
   const conversionRate = 0.00011; 
   const amountInUSD = (totalCart * conversionRate).toFixed(2);
 
-  const handlePaymentSuccess = (details: any) => {
+  const handlePaymentSuccess = (details: PaymentDetails) => {
     console.log("Payment successful:", details);
 
     clearCart();
     alert("Payment successful! Thank you for your purchase.");
   };
 
-  const handlePaymentError = (error: any) => {
+  const handlePaymentError = (error: unknown) => {
     console.error("Payment error:", error);
     alert("Payment failed. Please try again.");
   };

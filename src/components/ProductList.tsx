@@ -6,22 +6,8 @@ import Link from "next/link";
 import { useCart } from "@/components/CartContext";
 import FilterSection from "./FilterSection";
 import Footer from "./Footer";
-
-export interface Product {
-  id: number;
-  productName: string;
-  description: string;
-  price: number;
-  category: string;
-  image: string;
-  sellerName: string;
-  contactDetails: string;
-  genre: string;
-  size: string;
-  lengthType: string;
-  fabric: string;
-  color: string;
-}
+import Image from "next/image";
+import { Product } from "@/types/product";
 
 const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -106,7 +92,7 @@ const ProductList = () => {
                 >
                   <Link href={`/${product.id}`}>
                   {product.image && (
-                    <img
+                    <Image
                       src={product.image}
                       alt={product.productName}
                       className="w-40 h-40 object-cover mx-auto"
