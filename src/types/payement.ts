@@ -18,6 +18,10 @@ export interface PaymentDetails {
       };
     };
   }[];
+  payments?: {
+    method: string;
+    status: string;
+  };
   payer: {
     email_address: string;
   };

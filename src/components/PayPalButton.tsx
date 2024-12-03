@@ -45,7 +45,9 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
                 payments: unit.payments || { captures:  [{ id: "" }] },
                 amount: unit.amount || { value: "0", currency_code: "USD" },
               })) || [],
-              payer: customer || { email_address: "" },
+              payer: { 
+                email_address: customer?.email_address || "",
+              },
               create_time: details.create_time || "",
               update_time: details.update_time || "",
             };

@@ -23,6 +23,7 @@ interface Product {
 }
 
 const ProductForm = () => {
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [products, setProducts] = useState<Product[]>(() => {
     if (typeof window !== "undefined") {
       return JSON.parse(localStorage.getItem("products") || "[]");
@@ -141,7 +142,7 @@ const ProductForm = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
       <div className="container max-auto p-4 w-3/4">
         <h2 className="text-2xl font-bold mb-6">Add Product</h2>
         <form onSubmit={handleSubmit} className="space-y-4">

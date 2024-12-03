@@ -12,15 +12,21 @@ export default function CheckoutPage() {
   const handlePaymentSuccess = async (details: PaymentDetails) => {
     setLoading(true);
     try {
+      // const paymentId = details.purchase_units[0]?.payments?.captures?.[0]?.id;
+
+      // if (!paymentId) {
+      //   throw new Error("Payment ID not found in payment details");
+      // }
+
       const response = await fetch("/api/orders/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           orderId: details.id,
-          paymentId: details.purchase_units[0].payments.captures[0].id,
+          paymentId: details.paymentId,
           status: details.status,
-          amount: details.purchase_units[0].amount.value,
-          currency: details.purchase_units[0].amount.currency_code,
+          amount: details.purchase_units[0]?.amount.value,
+          currency: details.purchase_units[0]?.amount.currency_code,
           payerEmail: details.payer.email_address,
         }),
       });
